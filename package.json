@@ -1,0 +1,28 @@
+{
+  "name": "http-to-curl",
+  "version": "1.0.0",
+  "description": "Convert node HTTP request to curl",
+  "main": "index.js",
+  "author": "Ryan Nixon Salim",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "monkeypatch": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46",
+    "babel-core": "^7.0.0-0",
+    "babel-jest": "^22.4.3",
+    "esm": "^3.0.27",
+    "jest": "^22.4.3",
+    "regenerator-runtime": "^0.11.1",
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-node-resolve": "^3.3.0"
+  }
+}
