@@ -1,6 +1,6 @@
 {
-  "name": "http-to-curl",
-  "version": "1.0.0",
+  "name": "node-http-to-curl",
+  "version": "0.0.1",
   "description": "Convert node HTTP request to curl",
   "main": "index.js",
   "author": "Ryan Nixon Salim",
@@ -24,5 +24,6 @@
     "rollup": "^0.58.2",
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-node-resolve": "^3.3.0"
-  }
+  },
+  "repository": "https://github.com/drgx/node-http-to-curl.git"
 }
