@@ -66,7 +66,6 @@ export function generateUrl(options = {}) {
   return `"${protocol}//${hostname}${pathname}"`;
 }
 
-
 /**
  *
  *
@@ -96,28 +95,45 @@ export function generateCompress(isEncode) {
  * @export
  * @param {any} options
  * @param {string} [body='']
+ * @param {any} regex
  */
-export function curlGenerator(options, body = '') {
+export function curlGenerator(options, body = '', regex) {
   let result = 'curl ';
   const headers = generateHeader(options);
-  result += generateUrl(options) + ' ';
+  const url = generateUrl(options);
+  if (regex) {
+    let matchTemp = regex;
+    if (!Array.isArray(regex)) {
+      matchTemp = [regex];
+    }
+    const isMatchFilter = matchTemp.filter(value => {
+      return url.match(value);
+    });
+    if (isMatchFilter.length === 0) {
+      return '';
+    }
+  }
+
+  result += url + ' ';
   result += generateMethod(options) + ' ';
   result += headers.params + ' ';
   result += generateBody(body) + ' ';
   result += generateCompress(headers.isEncode);
   console.log(result);
+  return result;
 }
 
 /**
  *
  *
  * @export
+ * @param {any} regex
  * @param {any} request
  * @param {any} options
  * @param {any} cb
  * @returns
  */
-export function requestPatch(request, options, cb) {
+export function requestPatch(regex, request, options, cb) {
   const bodyData = [];
   const clientReq = request(options, cb);
 
@@ -128,11 +144,11 @@ export function requestPatch(request, options, cb) {
 
   monkeypatch(clientReq, 'end', (original, data, encoding, cb) => {
     let body = '';
-    if(bodyData.length > 0) {
+    if (bodyData.length > 0) {
       body = Buffer.concat(bodyData).toString();
     }
 
-    curlGenerator(options, body);
+    curlGenerator(options, body, regex);
     return original(data, encoding, cb);
   });
   return clientReq;
@@ -143,7 +159,9 @@ export function requestPatch(request, options, cb) {
  * @param {string} [urlRegex='']
  */
 function httpToCurl(urlRegex = '') {
-  monkeypatch(http, 'request', requestPatch);
+  monkeypatch(http, 'request', (request, options, cb) => {
+    return requestPatch(urlRegex, request, options, cb);
+  });
 }
 
 export default httpToCurl;

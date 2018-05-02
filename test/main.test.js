@@ -142,20 +142,90 @@ describe('Generate Compress param', () => {
   });
 });
 
-test('Basic GET', () => {
-  const getOptions = {
-    pathname: '/api/xrp_idr/ticker',
-    hostname: 'vip.bitcoin.co.id',
-    port: null,
-    auth: undefined,
-    agent: undefined,
-    headers: {
-      Accept: 'application/json, text/plain, */*',
-      'User-Agent': 'axios/0.18.0'
-    },
-    method: 'get',
-    protocol: 'https:'
-  };
+describe('Curl generator', () => {
+  test('Basic request', () => {
+    const getOptions = {
+      pathname: '/api/xrp_idr/ticker',
+      hostname: 'vip.bitcoin.co.id',
+      port: null,
+      auth: undefined,
+      agent: undefined,
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'User-Agent': 'axios/0.18.0'
+      },
+      method: 'get',
+      protocol: 'https:'
+    };
+    const result = `curl \"https://vip.bitcoin.co.id/api/xrp_idr/ticker\" -XGET -H \"Accept: application/json, text/plain, */*\" -H \"User-Agent: axios/0.18.0\"  `;
+    expect(curlGenerator(getOptions)).toEqual(result);
+  });
 
-  expect(curlGenerator(getOptions)).toMatchSnapshot();
-});
+  test('single regex request', () => {
+    const getOptions = {
+      pathname: '/api/xrp_idr/ticker',
+      hostname: 'vip.bitcoin.co.id',
+      port: null,
+      auth: undefined,
+      agent: undefined,
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'User-Agent': 'axios/0.18.0'
+      },
+      method: 'get',
+      protocol: 'https:'
+    };
+    const result = `curl \"https://vip.bitcoin.co.id/api/xrp_idr/ticker\" -XGET -H \"Accept: application/json, text/plain, */*\" -H \"User-Agent: axios/0.18.0\"  `;
+    expect(curlGenerator(getOptions, '', /api/)).toEqual(result);
+  });
+
+  test('array regex request', () => {
+    const getOptions = {
+      pathname: '/bbb/xrp_idr/ticker',
+      hostname: 'vip.bitcoin.co.id',
+      port: null,
+      auth: undefined,
+      agent: undefined,
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'User-Agent': 'axios/0.18.0'
+      },
+      method: 'get',
+      protocol: 'https:'
+    };
+    const result = `curl \"https://vip.bitcoin.co.id/bbb/xrp_idr/ticker\" -XGET -H \"Accept: application/json, text/plain, */*\" -H \"User-Agent: axios/0.18.0\"  `;
+    expect(curlGenerator(getOptions, '', [/api/, /bbb/])).toEqual(result);
+  });
+  test('wrong regex', () => {
+    const getOptions = {
+      pathname: '/bbb/xrp_idr/ticker',
+      hostname: 'vip.bitcoin.co.id',
+      port: null,
+      auth: undefined,
+      agent: undefined,
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'User-Agent': 'axios/0.18.0'
+      },
+      method: 'get',
+      protocol: 'https:'
+    };
+    expect(curlGenerator(getOptions, '', /asd/)).toEqual('');
+  });
+  test('wrong multi regex', () => {
+    const getOptions = {
+      pathname: '/bbb/xrp_idr/ticker',
+      hostname: 'vip.bitcoin.co.id',
+      port: null,
+      auth: undefined,
+      agent: undefined,
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'User-Agent': 'axios/0.18.0'
+      },
+      method: 'get',
+      protocol: 'https:'
+    };
+    expect(curlGenerator(getOptions, '', [/asd/, /xxx/])).toEqual('');
+  });
+})
