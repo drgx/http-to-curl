@@ -3,6 +3,5 @@ test
 example
 .babelrc
 .gitignore
-Readme.md
 rollup.config.js
 yarn.lock

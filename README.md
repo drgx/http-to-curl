@@ -1,19 +1,19 @@
 # Node js HTTP request to cURL
-Tired to manually generate curl from nodejs request for debugging proposes? Need to export nodejs request to REST client (e.g. [Insomnia](https://insomnia.rest/) and [Postman](https://www.getpostman.com/))? node-http-to-curl come to the rescue!!
+Tired to manually generate curl from nodejs request for debugging proposes? Need to export nodejs request to REST client (e.g. [Insomnia](https://insomnia.rest/) and [Postman](https://www.getpostman.com/))? http-to-curl come to the rescue!!
 
 
 ## Installation ⚙️
 ```javascript
-yarn add node-http-to-curl
+yarn add http-to-curl
 ```
 
 ## Usage 📚
 ```
-import httpToCurl from 'node-http-to-curl';
+import httpToCurl from 'http-to-curl';
 httpToCurl();
 
 /*
-  import your favorite http client (e.g. axios, isomorphic fetch or even vanilla request) all works well with node-http-to-curl.
+  import your favorite http client (e.g. axios, isomorphic fetch or even vanilla request) all works well with http-to-curl.
 
   In this example we using axios
 */
@@ -33,10 +33,10 @@ It will listen all your nodejs http request and generate curl for each request. 
 `nodejs-http-to-curl` support filtering url using regex and string. Only match url will be generated.
 
 ```
-import httpToCurl from 'node-http-to-curl';
+import httpToCurl from 'http-to-curl';
 httpToCurl([/api/v1/, /api/v3/]); << Only generate match url
 ```
 
 
 ## Contributing
-We'd ❤️ to have your helping hand on node-http-to-curl! Feel free to PR's, add issues or give feedback! Happy Hacking!! 😎
+We'd ❤️ to have your helping hand on http-to-curl! Feel free to PR's, add issues or give feedback! Happy Hacking!! 😎
