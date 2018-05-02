@@ -3,12 +3,15 @@ Tired to manually generate curl from nodejs request for debugging proposes? Need
 
 
 ## Installation ⚙️
-```javascript
+```sh
 yarn add http-to-curl
+# old way
+npm install http-to-curl --save
+
 ```
 
 ## Usage 📚
-```
+```js
 import httpToCurl from 'http-to-curl';
 httpToCurl();
 
@@ -32,7 +35,7 @@ It will listen all your nodejs http request and generate curl for each request. 
 ## Filtering ✅
 `nodejs-http-to-curl` support filtering url using regex and string. Only match url will be generated.
 
-```
+```js
 import httpToCurl from 'http-to-curl';
 httpToCurl([/api/v1/, /api/v3/]); << Only generate match url
 ```
