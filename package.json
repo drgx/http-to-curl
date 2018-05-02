@@ -1,6 +1,6 @@
 {
   "name": "http-to-curl",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Convert node HTTP request to curl",
   "main": "lib/bundle.js",
   "author": "Ryan Nixon Salim",
