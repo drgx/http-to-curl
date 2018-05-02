@@ -98,7 +98,7 @@ export function generateCompress(isEncode) {
  * @param {any} regex
  */
 export function curlGenerator(options, body = '', regex) {
-  let result = 'curl ';
+  let result = 'cURL ';
   const headers = generateHeader(options);
   const url = generateUrl(options);
   if (regex) {
