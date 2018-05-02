@@ -34,11 +34,6 @@
     "url": "https://github.com/drgx/http-to-curl/issues"
   },
   "homepage": "https://github.com/drgx/http-to-curl#readme",
-  "directories": {
-    "example": "example",
-    "lib": "lib",
-    "test": "test"
-  },
   "keywords": [
     "curl",
     "axios",
