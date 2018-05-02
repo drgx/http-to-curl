@@ -27,7 +27,7 @@ const options = {
 };
 
 //output
-cURL "https://jsonplaceholder.typicode.com/posts/1" -XGET -H "Accept: application/json, text/plain, */*" -H "User-Agent: axios/0.18.0"
+curl "https://jsonplaceholder.typicode.com/posts/1" -X GET -H "Accept: application/json, text/plain, */*" -H "User-Agent: axios/0.18.0"
 
 ```
 It will listen all your nodejs http request and generate curl for each request. Its support all method (GET, POST, PUT, DELETE & PATCH)
