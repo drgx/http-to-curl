@@ -10,12 +10,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "monkeypatch": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.46",
     "@babel/preset-env": "^7.0.0-beta.46",
+    "axios": "^0.18.0",
     "babel-core": "^7.0.0-0",
     "babel-jest": "^22.4.3",
     "esm": "^3.0.27",
@@ -25,5 +25,17 @@
     "rollup-plugin-babel": "^3.0.4",
     "rollup-plugin-node-resolve": "^3.3.0"
   },
-  "repository": "https://github.com/drgx/node-http-to-curl.git"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drgx/node-http-to-curl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/drgx/node-http-to-curl/issues"
+  },
+  "homepage": "https://github.com/drgx/node-http-to-curl#readme",
+  "directories": {
+    "example": "example",
+    "lib": "lib",
+    "test": "test"
+  }
 }
