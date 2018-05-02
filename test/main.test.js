@@ -15,31 +15,31 @@ describe('Generate method param', () => {
     const option = {
       method: 'post'
     };
-    expect(generateMethod(option)).toEqual('-XPOST');
+    expect(generateMethod(option)).toEqual('-X POST');
   });
   test('PUT', () => {
     const option = {
       method: 'Put'
     };
-    expect(generateMethod(option)).toEqual('-XPUT');
+    expect(generateMethod(option)).toEqual('-X PUT');
   });
   test('GET', () => {
     const option = {
       method: 'GET'
     };
-    expect(generateMethod(option)).toEqual('-XGET');
+    expect(generateMethod(option)).toEqual('-X GET');
   });
   test('PATCH', () => {
     const option = {
       method: 'PATCH'
     };
-    expect(generateMethod(option)).toEqual('-XPATCH');
+    expect(generateMethod(option)).toEqual('-X PATCH');
   });
   test('DELETE', () => {
     const option = {
       method: 'DELETE'
     };
-    expect(generateMethod(option)).toEqual('-XDELETE');
+    expect(generateMethod(option)).toEqual('-X DELETE');
   });
   test('Unknown method', () => {
     const option = {
@@ -157,7 +157,7 @@ describe('Curl generator', () => {
       method: 'get',
       protocol: 'https:'
     };
-    const result = `cURL \"https://vip.bitcoin.co.id/api/xrp_idr/ticker\" -XGET -H \"Accept: application/json, text/plain, */*\" -H \"User-Agent: axios/0.18.0\"  `;
+    const result = `curl \"https://vip.bitcoin.co.id/api/xrp_idr/ticker\" -X GET -H \"Accept: application/json, text/plain, */*\" -H \"User-Agent: axios/0.18.0\"  `;
     expect(curlGenerator(getOptions)).toEqual(result);
   });
 
@@ -175,7 +175,7 @@ describe('Curl generator', () => {
       method: 'get',
       protocol: 'https:'
     };
-    const result = `cURL \"https://vip.bitcoin.co.id/api/xrp_idr/ticker\" -XGET -H \"Accept: application/json, text/plain, */*\" -H \"User-Agent: axios/0.18.0\"  `;
+    const result = `curl \"https://vip.bitcoin.co.id/api/xrp_idr/ticker\" -X GET -H \"Accept: application/json, text/plain, */*\" -H \"User-Agent: axios/0.18.0\"  `;
     expect(curlGenerator(getOptions, '', /api/)).toEqual(result);
   });
 
@@ -193,7 +193,7 @@ describe('Curl generator', () => {
       method: 'get',
       protocol: 'https:'
     };
-    const result = `cURL \"https://vip.bitcoin.co.id/bbb/xrp_idr/ticker\" -XGET -H \"Accept: application/json, text/plain, */*\" -H \"User-Agent: axios/0.18.0\"  `;
+    const result = `curl \"https://vip.bitcoin.co.id/bbb/xrp_idr/ticker\" -X GET -H \"Accept: application/json, text/plain, */*\" -H \"User-Agent: axios/0.18.0\"  `;
     expect(curlGenerator(getOptions, '', [/api/, /bbb/])).toEqual(result);
   });
   test('wrong regex', () => {

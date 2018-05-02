@@ -1,7 +1,7 @@
 import monkeypatch from 'monkeypatch';
 import http from 'http';
 import buffer from 'buffer';
-
+import chalk from 'chalk';
 /**
  *
  *
@@ -13,11 +13,11 @@ export function generateMethod(options) {
   const method = options.method;
   if (!method) return '';
   const type = {
-    GET: '-XGET',
-    POST: '-XPOST',
-    PUT: '-XPUT',
-    PATCH: '-XPATCH',
-    DELETE: '-XDELETE'
+    GET: '-X GET',
+    POST: '-X POST',
+    PUT: '-X PUT',
+    PATCH: '-X PATCH',
+    DELETE: '-X DELETE'
   };
   const methodParam = type[method.toUpperCase()];
   return methodParam ? methodParam : '';
@@ -98,7 +98,7 @@ export function generateCompress(isEncode) {
  * @param {any} regex
  */
 export function curlGenerator(options, body = '', regex) {
-  let result = 'cURL ';
+  let result = 'curl ';
   const headers = generateHeader(options);
   const url = generateUrl(options);
   if (regex) {
@@ -119,7 +119,9 @@ export function curlGenerator(options, body = '', regex) {
   result += headers.params + ' ';
   result += generateBody(body) + ' ';
   result += generateCompress(headers.isEncode);
-  console.log(result);
+  console.log(`${chalk.black.bgYellow.bold(' http-to-curl ')}
+  ${result}
+  `);
   return result;
 }
 
@@ -144,6 +146,9 @@ export function requestPatch(regex, request, options, cb) {
 
   monkeypatch(clientReq, 'end', (original, data, encoding, cb) => {
     let body = '';
+    if (data) {
+      bodyData.push(data);
+    }
     if (bodyData.length > 0) {
       body = Buffer.concat(bodyData).toString();
     }
