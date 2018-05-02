@@ -9,6 +9,7 @@
     "build": "rollup -c",
     "test": "jest"
   },
+  "files" : ["lib/"],
   "dependencies": {
     "chalk": "^2.4.1",
     "monkeypatch": "^1.0.0"
