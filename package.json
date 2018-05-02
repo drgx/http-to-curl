@@ -2,7 +2,7 @@
   "name": "node-http-to-curl",
   "version": "0.0.1",
   "description": "Convert node HTTP request to curl",
-  "main": "index.js",
+  "main": "lib/bundle.js",
   "author": "Ryan Nixon Salim",
   "license": "MIT",
   "scripts": {
