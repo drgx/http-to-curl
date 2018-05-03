@@ -1,5 +1,5 @@
 # Node js HTTP request to cURL
-Tired to manually generate curl from nodejs request for debugging proposes? Need to export nodejs request to REST client (e.g. [Insomnia](https://insomnia.rest/) and [Postman](https://www.getpostman.com/))? http-to-curl come to the rescue!!
+Tired to manually generate curl from nodejs request for debugging proposes? Need to export nodejs request to your REST client (e.g. [Insomnia](https://insomnia.rest/) and [Postman](https://www.getpostman.com/))? http-to-curl come to the rescue!!
 
 
 ## Installation ⚙️
@@ -12,23 +12,23 @@ npm install http-to-curl --save
 
 ## Usage 📚
 ```js
+// import httpToCurl on your server entry point of your project or code (e.g. server.js / index.js)
 import httpToCurl from 'http-to-curl';
 httpToCurl();
 // Traditional way
 const httpToCurl = require('http-to-curl').default;
 httpToCurl();
-/*
-  import your favorite http client (e.g. axios, isomorphic fetch or even vanilla request) all works well with http-to-curl.
 
-  In this example we using axios
-*/
+//  Use your favorite http client to fetch (e.g. axios, isomorphic fetch or even vanilla request) all works well with http-to-curl.
+//  In this example we are using axios.
+
 import axios from 'axios'
 const options = {
   url: 'https://jsonplaceholder.typicode.com/posts/1',
   method: 'get'
 };
 
-//output
+//Output
 curl "https://jsonplaceholder.typicode.com/posts/1" -X GET -H "Accept: application/json, text/plain, */*" -H "User-Agent: axios/0.18.0"
 
 ```
