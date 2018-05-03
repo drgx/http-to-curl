@@ -1,3 +1,4 @@
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 # Node js HTTP request to cURL
 Tired to manually generate curl from nodejs request for debugging proposes? Need to export nodejs request to your REST client (e.g. [Insomnia](https://insomnia.rest/) and [Postman](https://www.getpostman.com/))? http-to-curl come to the rescue!!
 
