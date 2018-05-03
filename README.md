@@ -14,7 +14,9 @@ npm install http-to-curl --save
 ```js
 import httpToCurl from 'http-to-curl';
 httpToCurl();
-
+// Traditional way
+const httpToCurl = require('http-to-curl').default;
+httpToCurl();
 /*
   import your favorite http client (e.g. axios, isomorphic fetch or even vanilla request) all works well with http-to-curl.
 
@@ -37,7 +39,10 @@ It will listen all your nodejs http request and generate curl for each request. 
 
 ```js
 import httpToCurl from 'http-to-curl';
-httpToCurl([/api/v1/, /api/v3/]); << Only generate match url
+//Single url match
+httpToCurl(/api/v1/);
+//Multiple url match
+httpToCurl([/api/v1/, /api/v3/]);
 ```
 
 
