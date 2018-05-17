@@ -21,6 +21,7 @@ npm install http-to-curl --save
 // import httpToCurl on your server entry point of your project or code (e.g. server.js / index.js)
 import httpToCurl from 'http-to-curl';
 httpToCurl();
+
 // Traditional way
 const httpToCurl = require('http-to-curl').default;
 httpToCurl();
