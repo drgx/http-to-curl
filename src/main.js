@@ -37,7 +37,7 @@ export function generateHeader(options) {
   let headerParam = '';
   Object.keys(headers).map((val, key) => {
     if (val.toLocaleLowerCase() !== 'content-length') {
-      headerParam += `-H "${val}: ${headers[val]}" `;
+      headerParam += `-H "${val}: ${headers[val].replace(/(\\|")/g, '\\$1')}" `;
     }
     if (val.toLocaleLowerCase() === 'accept-encoding') {
       isEncode = true;
