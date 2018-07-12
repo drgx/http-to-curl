@@ -156,7 +156,6 @@ export function requestPatch(regex, request, options, cb, customCallback) {
   return clientReq;
 }
 
-
 /**
  *
  *
@@ -173,9 +172,9 @@ function httpToCurl(options) {
  * @param {*} httpObject
  * @param {*} { filter = '', customCallback = () => {} }
  */
-function monkeyPatchHttp(httpObject, options = {filter: '', customCallback = ()=> {}}) {
+function monkeyPatchHttp(httpObject, options = { filter: '', customCallback: () => {} }) {
   monkeypatch(httpObject, 'request', (request, requestOptions, cb) => {
-    const {filter , customCallback} = options;
+    const { filter, customCallback } = options;
     return requestPatch(filter, request, requestOptions, cb, customCallback);
   });
 }
