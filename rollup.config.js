@@ -6,10 +6,7 @@ export default {
   input: 'src/main.js',
   output: {
     file: 'lib/bundle.js',
-    format: 'cjs'
+    format: 'cjs',
   },
-  plugins: [
-    uglify(),
-    minify()
-  ]
+  plugins: [uglify(), minify()],
 };

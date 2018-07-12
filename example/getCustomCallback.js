@@ -3,9 +3,13 @@ require = require('esm')({ module, mode: 'all' });
 const httpToCurl = require('../src/main').default;
 const httpToCurlOptions = {
   filter: [/post/, /xxx/],
+  customCallback: curlString => {
+    console.log('this is custom callback', curlString);
+  },
 };
-
-httpToCurl(httpToCurlOptions);
+// httpToCurl(/post/); //valid
+httpToCurl(httpToCurlOptions); //valid
+// httpToCurl(/xxx/); //invalid
 
 const options = {
   url: 'https://jsonplaceholder.typicode.com/posts/1',

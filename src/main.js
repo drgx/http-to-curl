@@ -132,7 +132,7 @@ export function curlGenerator(options, body = '', regex) {
  * @param {any} cb
  * @returns
  */
-export function requestPatch(regex, request, options, cb) {
+export function requestPatch(regex, request, options, cb, customCallback) {
   const bodyData = [];
   const clientReq = request(options, cb);
 
@@ -150,22 +150,31 @@ export function requestPatch(regex, request, options, cb) {
       body = Buffer.concat(bodyData).toString();
     }
 
-    curlGenerator(options, body, regex);
+    customCallback(curlGenerator(options, body, regex));
     return original(data, encoding, cb);
   });
   return clientReq;
 }
+
 /**
  *
  *
- * @param {string} [urlRegex='']
+ * @param {*} options
  */
-function httpToCurl(urlRegex = '') {
-  monkeypatch(http, 'request', (request, options, cb) => {
-    return requestPatch(urlRegex, request, options, cb);
-  });
-  monkeypatch(https, 'request', (request, options, cb) => {
-    return requestPatch(urlRegex, request, options, cb);
+function httpToCurl(options) {
+  monkeyPatchHttp(http, options);
+  monkeyPatchHttp(https, options);
+}
+
+/**
+ *
+ *
+ * @param {*} httpObject
+ * @param {*} { filter = '', customCallback = () => {} }
+ */
+function monkeyPatchHttp(httpObject, { filter = '', customCallback = () => {} }) {
+  monkeypatch(httpObject, 'request', (request, requestOptions, cb) => {
+    return requestPatch(filter, request, requestOptions, cb, customCallback);
   });
 }
 
