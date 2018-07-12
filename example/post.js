@@ -9,11 +9,11 @@ const options = {
   data: JSON.stringify({
     title: 'foo',
     body: 'bar',
-    userId: 1
+    userId: 1,
   }),
   headers: {
-    'Content-type': 'application/json; charset=UTF-8'
-  }
+    'Content-type': 'application/json; charset=UTF-8',
+  },
 };
 
 axios(options)

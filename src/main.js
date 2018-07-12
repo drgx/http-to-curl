@@ -1,5 +1,6 @@
 import monkeypatch from 'monkeypatch';
 import http from 'http';
+import https from 'https';
 import buffer from 'buffer';
 import chalk from 'chalk';
 /**
@@ -17,7 +18,7 @@ export function generateMethod(options) {
     POST: '-X POST',
     PUT: '-X PUT',
     PATCH: '-X PATCH',
-    DELETE: '-X DELETE'
+    DELETE: '-X DELETE',
   };
   const methodParam = type[method.toUpperCase()];
   return methodParam ? methodParam : '';
@@ -45,7 +46,7 @@ export function generateHeader(options) {
   });
   return {
     params: headerParam.trim(),
-    isEncode
+    isEncode,
   };
 }
 
@@ -58,11 +59,7 @@ export function generateHeader(options) {
  */
 export function generateUrl(options = {}) {
   if (!options) return '';
-  const {
-    protocol = 'http:',
-    hostname = 'localhost',
-    pathname = '/'
-  } = options;
+  const { protocol = 'http:', hostname = 'localhost', pathname = '/' } = options;
   return `"${protocol}//${hostname}${pathname}"`;
 }
 
@@ -165,6 +162,9 @@ export function requestPatch(regex, request, options, cb) {
  */
 function httpToCurl(urlRegex = '') {
   monkeypatch(http, 'request', (request, options, cb) => {
+    return requestPatch(urlRegex, request, options, cb);
+  });
+  monkeypatch(https, 'request', (request, options, cb) => {
     return requestPatch(urlRegex, request, options, cb);
   });
 }
