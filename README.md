@@ -1,6 +1,7 @@
 [![npm version](https://badge.fury.io/js/http-to-curl.svg)](https://badge.fury.io/js/http-to-curl)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 ![Depedencies](https://david-dm.org/drgx/http-to-curl.svg)
+[![Build Status](https://travis-ci.org/drgx/http-to-curl.svg?branch=master)](https://travis-ci.org/drgx/http-to-curl)
 
 # Node js HTTP request to cURL
 
