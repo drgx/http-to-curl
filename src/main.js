@@ -116,9 +116,6 @@ export function curlGenerator(options, body = '', regex) {
   result += headers.params + ' ';
   result += generateBody(body) + ' ';
   result += generateCompress(headers.isEncode);
-  console.log(`${chalk.black.bgYellow.bold(' http-to-curl ')}
-  ${result}
-  `);
   return result;
 }
 
@@ -150,7 +147,11 @@ export function requestPatch(regex, request, options, cb, customCallback) {
       body = Buffer.concat(bodyData).toString();
     }
 
-    customCallback(curlGenerator(options, body, regex));
+    const command = curlGenerator(options, body, regex);
+    console.log(`${chalk.black.bgYellow.bold(' http-to-curl ')}
+    ${command}
+    `);
+    customCallback(command);
     return original(data, encoding, cb);
   });
   return clientReq;
