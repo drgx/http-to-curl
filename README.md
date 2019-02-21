@@ -51,12 +51,12 @@ It will listen all your nodejs http request and generate curl for each request. 
 import httpToCurl from 'http-to-curl';
 //Single url match
 const options = {
-  filter: /api/v1/
+  filter: /api\/v1/
 }
 httpToCurl(options);
 //Multiple url match
 const options = {
-  filter: [/api/v1/, /api/v3/]
+  filter: [/api\/v1/, /api\/v3/]
 }
 httpToCurl(options);
 ```
