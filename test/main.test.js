@@ -6,6 +6,65 @@ import {
   generateBody,
   generateCompress
 } from '../src/main';
+import httpToCurl from '../src/main';
+
+const request = require('request');
+const nock = require('nock');
+
+
+describe('Request using options object', () => {
+
+  const mock_callback = jest.fn();
+  const httpToCurlOptions = {
+    customCallback: mock_callback,
+    showOutput: false,
+  };
+  httpToCurl(httpToCurlOptions);
+
+  beforeEach(() => {
+    nock('https://api.httpcurl.com')
+      .post('/users/data')
+      .reply(200, '{ "response": true}');
+  });
+
+  it('POST form data', done => {
+    expect.assertions(7)
+
+    //Configuration options for request
+    var options = {
+      method: 'POST',
+      url: 'https://api.httpcurl.com/users/data',
+      headers: {
+        'Content-Type': ['application/x-www-form-urlencoded'],
+        'header1': "value1",
+      },
+      form: {
+        attrib1: 'attribvalue1',
+        attrib2: 'attribvalue2',
+      },
+    };
+
+    request.post(options);
+
+    //expect an object back
+    setTimeout(() => {
+      try {
+        expect(mock_callback).toBeCalled();
+        const result = mock_callback.mock.calls[0][0];  // first call, first parameter
+        expect(result).toContain("https://api.httpcurl.com");
+        expect(result).toContain("-X POST");
+        expect(result).toContain("attrib1=attribvalue1&attrib2=attribvalue2");
+        expect(result).toContain("Content-Type: application/x-www-form-urlencoded");
+        expect(result).toContain("header1: value1");
+        expect(result).toContain("host: api.httpcurl.com");
+        done()
+      } catch (err) {
+        done.fail(err)
+      }
+    })
+
+  });
+});
 
 describe('Generate method param', () => {
   test('No method', () => {

@@ -38,7 +38,8 @@ export function generateHeader(options) {
   let headerParam = '';
   Object.keys(headers).map((val, key) => {
     if (val.toLocaleLowerCase() !== 'content-length') {
-      headerParam += `-H "${val}: ${headers[val].replace(/(\\|")/g, '\\$1')}" `;
+      // contents of headers[val] is a <Buffer>, so we need to convert that back to a string
+      headerParam += `-H "${val}: ${headers[val].toString('utf8').replace(/(\\|")/g, '\\$1')}" `;
     }
     if (val.toLocaleLowerCase() === 'accept-encoding') {
       isEncode = true;
@@ -59,7 +60,10 @@ export function generateHeader(options) {
  */
 export function generateUrl(options = {}) {
   if (!options) return '';
-  const { protocol = 'http:', hostname = 'localhost', pathname = '/' } = options;
+  var { protocol, hostname, pathname, uri } = options;
+  protocol = protocol || uri && uri.protocol || 'http:';
+  hostname = hostname || uri && uri.hostname || 'localhost';
+  pathname = pathname || uri && uri.pathname || '/';
   return `"${protocol}//${hostname}${pathname}"`;
 }
 
@@ -129,11 +133,21 @@ export function curlGenerator(options, body = '', regex) {
  * @param {any} cb
  * @returns
  */
-export function requestPatch(regex, request, options, cb, customCallback) {
+export function requestPatch(regex, request, options, cb, customCallback, showOutput) {
+  // Note that options may be <Object> | <string> | <URL>
+  // https://nodejs.org/api/https.html#https_https_request_url_options_callback
+  // How `https` handles the params: https://github.com/nodejs/node/blob/v12.x/lib/https.js#L281
+
   const bodyData = [];
   const clientReq = request(options, cb);
 
   monkeypatch(clientReq, 'write', (original, chunk, encoding, cb) => {
+    // `chunk` is expected to be <string> | <Buffer>
+    // Convert <string> into <Buffer>, because bodyData should be an array of <Buffer>
+    // https://nodejs.org/api/http.html#http_request_write_chunk_encoding_callback
+    if (typeof chunk === 'string' || chunk instanceof String) {
+        chunk = Buffer.from(chunk, 'utf8');
+    }
     bodyData.push(chunk);
     return original(chunk, encoding, cb);
   });
@@ -148,9 +162,11 @@ export function requestPatch(regex, request, options, cb, customCallback) {
     }
 
     const command = curlGenerator(options, body, regex);
-    console.log(`${chalk.black.bgYellow.bold(' http-to-curl ')}
-    ${command}
-    `);
+
+    if (showOutput){
+      console.log(`${chalk.black.bgYellow.bold(' http-to-curl ')}\n    ${command}\n`);
+    }
+
     customCallback(command);
     return original(data, encoding, cb);
   });
@@ -173,10 +189,10 @@ function httpToCurl(options) {
  * @param {*} httpObject
  * @param {*} { filter = '', customCallback = () => {} }
  */
-function monkeyPatchHttp(httpObject, options = { filter: '', customCallback: () => {} }) {
+function monkeyPatchHttp(httpObject, options = {}) {
   monkeypatch(httpObject, 'request', (request, requestOptions, cb) => {
-    const { filter, customCallback } = options;
-    return requestPatch(filter, request, requestOptions, cb, customCallback);
+    const { filter = '', customCallback = () => {}, showOutput = true } = options;
+    return requestPatch(filter, request, requestOptions, cb, customCallback, showOutput);
   });
 }
 

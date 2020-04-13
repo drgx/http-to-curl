@@ -72,6 +72,36 @@ const options = {
 httpToCurl(options);
 ```
 
+
+## 3. Disable output 👁
+This flag defaults to `true` and displays the output `curl` commands.  You may disable output from this library.
+```js
+const options = {
+  showOutput: false
+}
+httpToCurl(options);
+```
+
+# Building and using the library locally
+To avoid the need for installing the necessary libraries, the build can be performed within a Docker container.
+
+### Prequisite
+- Docker
+
+### Instructions
+In the project root folder, run the following commands.
+```bash
+docker build -t http-to-curl .
+docker run --name builder -it http-to-curl
+docker cp builder:/app/lib .
+docker container rm builder
+```
+
+You may now reference the project directly using
+```js
+require('<path to project>');
+```
+
 ## Contributing
 
 We'd ❤️ to have your helping hand on http-to-curl! Feel free to PR's, add issues or give feedback! Happy Hacking!! 😎
