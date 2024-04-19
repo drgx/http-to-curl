@@ -59,8 +59,8 @@ export function generateHeader(options) {
  */
 export function generateUrl(options = {}) {
   if (!options) return '';
-  const { protocol = 'http:', hostname = 'localhost', pathname = '/' } = options;
-  return `"${protocol}//${hostname}${pathname}"`;
+  const { protocol = 'http:', hostname = 'localhost', pathname = '/', search = '' } = options;
+  return `"${protocol}//${hostname}${pathname}${search}"`;
 }
 
 /**
