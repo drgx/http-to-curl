@@ -113,6 +113,15 @@ describe('Generate URL param', () => {
     };
     expect(generateUrl(options)).toEqual(`\"https://www.google.com/lala\"`);
   });
+  test('Search (query string param)', () => {
+    const options = {
+      protocol: 'https:',
+      hostname: 'www.google.com',
+      pathname: '/lala',
+      search: '?test=123'
+    };
+    expect(generateUrl(options)).toEqual(`\"https://www.google.com/lala?test=123\"`);
+  });
 });
 
 describe('Generate body param', () => {
